@@ -1,4 +1,7 @@
-﻿namespace eTickets
+﻿using eTickets.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace eTickets
 {
     public static class Startup
     {
@@ -13,6 +16,9 @@
 
         private static void ConfigureServices(WebApplicationBuilder builder)
         {
+            //DbContext configurations
+            builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(ConfigureServices.GetConnectionString("DefaultConnectionString")()));
+
             builder.Services.AddControllersWithViews();
 
         }
@@ -37,6 +43,8 @@
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.Run();
 
         }
     }
