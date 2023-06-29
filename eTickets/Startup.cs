@@ -14,10 +14,11 @@ namespace eTickets
             return app;
         }
 
+
         private static void ConfigureServices(WebApplicationBuilder builder)
         {
             //DbContext configurations
-            builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(ConfigureServices.GetConnectionString("DefaultConnectionString")()));
+            builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
             builder.Services.AddControllersWithViews();
 
@@ -44,7 +45,7 @@ namespace eTickets
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            app.Run();
+            
 
         }
     }
